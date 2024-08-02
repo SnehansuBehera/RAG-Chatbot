@@ -1,17 +1,21 @@
-import { VercelAI } from '@vercel/ai-sdk';
+const { Configuration, OpenAIApi } = require('openai');
 
 export async function POST(req) {
-    const ai = new VercelAI(process.env.VERCEL_AI_API_KEY);
     const { query } = await req.json();
 
+    const configuration = new Configuration({
+        apiKey: process.env.OPENAI_API_KEY,
+    });
+    const openai = new OpenAIApi(configuration);
+
     try {
-        const response = await ai.complete({
-            engine: 'davinci',
+        const response = await openai.createCompletion({
+            model: 'text-davinci-003',
             prompt: query,
-            maxTokens: 100,
+            max_tokens: 100,
         });
 
-        return new Response(JSON.stringify({ answer: response.choices[0].text.trim() }), {
+        return new Response(JSON.stringify({ answer: response.data.choices[0].text.trim() }), {
             headers: { 'Content-Type': 'application/json' },
         });
     } catch (error) {
