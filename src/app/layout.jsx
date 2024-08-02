@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
-
+import "./globals.css";
 
 export default function RootLayout({ children }) {
   const router = useRouter();
