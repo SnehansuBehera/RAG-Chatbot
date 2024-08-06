@@ -3,8 +3,11 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { useRouter } from 'next/navigation';
+import ChatComponent from './components/ChatComponent';
+import axios from 'axios';
 
 export default function Home() {
+  const [me, setMe] = useState('');
   const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
   const [userId, setUserId] = useState(null);
@@ -41,7 +44,8 @@ export default function Home() {
     fetchChatHistory();
   }, [router]);
   const logout = async () => {
-    await supabase.auth.signOut()
+    await supabase.auth.signOut();
+    router.push('/login')
   }
   const handleSendMessage = async () => {
     if (!message.trim() || !userId) return;
@@ -71,12 +75,12 @@ export default function Home() {
           <button onClick={logout} className='ring-1 ring-zinc-700 rounded-lg  py-1 px-4 font-medium text-lg text-zinc-600'>Logout</button>
         </div>
 
-        <div className='flex flex-col gap-2 items-end'>
+        {/* <div className='flex flex-col gap-2 items-end'>
           {chatHistory.map((chat, index) => (
             <p key={index} className='w-[120px] px-1 py-2 text-right bg-sky-600 rounded-lg text-white font-semibold '>{chat.message}</p>
           ))}
-        </div>
-        <div className='flex items-center justify-start w-[800px] mx-auto gap-6'>
+        </div> */}
+        {/* <div className='flex items-center justify-start w-[800px] mx-auto gap-6'>
           <input
             type="text"
             value={message}
@@ -86,11 +90,13 @@ export default function Home() {
           />
           <button onClick={handleSendMessage} className='px-4 py-3 shadow-lg shadow-sky-200 bg-sky-500 rounded-lg text-white font-semibold'>Send</button>
 
-        </div>
+
+        </div> */}
+        <ChatComponent />
 
       </div>
 
 
-    </div>
+    </div >
   );
 }
