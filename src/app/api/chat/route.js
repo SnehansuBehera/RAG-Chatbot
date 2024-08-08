@@ -1,5 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { GoogleGenerativeAIStream, Message, StreamingTextResponse } from 'ai';
+import { google } from '@ai-sdk/google';
+import { generateText } from 'ai';
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || '');
 
@@ -20,8 +22,13 @@ export async function POST(req) {
         .getGenerativeModel({ model: 'gemini-pro' })
         .generateContentStream(buildGoogleGenAIPrompt(messages));
 
+    // const { text } = await generateText({
+    //     model: google('models/gemini-pro'),
+    //     prompt: messages,
+    // });
+
     const stream = GoogleGenerativeAIStream(geminiStream);
 
-
+    // return NextResponse.json(text);
     return new StreamingTextResponse(stream);
 }
