@@ -68,35 +68,24 @@ export default function Home() {
   };
 
   return (
-    <div className='h-[100vh] flex flex-col items-center justify-center'>
-      <div className='flex flex-col justify-between gap-20 w-[800px]  mx-auto'>
-        <div className='flex items-center justify-between'>
-          <p className='text-2xl font-bold text-zinc-500 text-left'>{chatHistory.length === 0 ? 'Start Conversation' : 'Carry on Conversation'}</p>
-          <button onClick={logout} className='ring-1 ring-zinc-700 rounded-lg  py-1 px-4 font-medium text-lg text-zinc-600'>Logout</button>
+    <div className='h-screen flex flex-col items-center'>
+      <div className='flex flex-col h-full w-full lg:w-[1000px]'>
+        {/* Header */}
+        <div className='flex items-center justify-between px-4 pt-4 pb-2 sm:py-4 bg-white'>
+          <p className='text-lg sm:text-xl lg:text-2xl font-bold text-zinc-500'>
+            {chatHistory.length === 0 ? 'Start Conversation' : 'Carry on Conversation'}
+          </p>
+          <button onClick={logout} className='ring-1 ring-zinc-700 rounded-lg py-1 px-3 sm:px-4 font-medium text-md sm:text-lg text-zinc-600'>
+            Logout
+          </button>
         </div>
 
-        {/* <div className='flex flex-col gap-2 items-end'>
-          {chatHistory.map((chat, index) => (
-            <p key={index} className='w-[120px] px-1 py-2 text-right bg-sky-600 rounded-lg text-white font-semibold '>{chat.message}</p>
-          ))}
-        </div> */}
-        {/* <div className='flex items-center justify-start w-[800px] mx-auto gap-6'>
-          <input
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Type a message"
-            className='w-full py-3 rounded-lg bg-white ring-1 ring-zinc-300 shadow-lg shadow-zinc-200 px-6'
-          />
-          <button onClick={handleSendMessage} className='px-4 py-3 shadow-lg shadow-sky-200 bg-sky-500 rounded-lg text-white font-semibold'>Send</button>
-
-
-        </div> */}
-        <ChatComponent />
-
+        {/* Chat Component */}
+        <div className='flex-1 overflow-y-auto my-2 sm:my-4 shadow-inner shadow-zinc-100 rounded-2xl'>
+          <ChatComponent />
+        </div>
       </div>
-
-
-    </div >
+    </div>
   );
-}
+
+} 
