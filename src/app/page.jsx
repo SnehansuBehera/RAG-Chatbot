@@ -22,6 +22,7 @@ export default function Home() {
         return;
       }
       if (session) {
+        console.log('authenticated');
         setUserId(session.user.id);
       } else {
         router.push('/login');
