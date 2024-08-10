@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+// import { toast } from 'react-toastify';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -13,7 +14,10 @@ const Login = () => {
         e.preventDefault();
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) alert(error.message);
-        else router.push('/');
+        else {
+            // toast.success('Logged in!');
+            router.push('/')
+        };
     };
 
     return (

@@ -7,20 +7,28 @@ import Link from 'next/link';
 export default function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [success, setSuccess] = useState(false);
     const router = useRouter();
 
     const handleSignup = async (e) => {
         e.preventDefault();
         const { error } = await supabase.auth.signUp({ email, password });
-        if (error) alert(error.message);
-        else router.push('/login');
+        if (error) {
+            console.log(error.message);
+        } else {
+            setSuccess(true);
+            router.push('/login')
+        };
     };
 
     return (
         <div className='flex items-center justify-center h-[100vh]'>
             <form onSubmit={handleSignup} className='flex flex-col items-center justify-start gap-10 bg-slate-100 rounded-xl shadow-lg shadow-zinc-200 py-16 px-16 '>
+                <div className='flex flex-col gap-2 items-center justify-start'>
+                    <p className='text-3xl font-extrabold'>Create Account!</p>
+                    <p className='text-lg font-semibold text-green-500'>Check your mail after signup</p>
+                </div>
 
-                <p className='text-3xl font-extrabold'>Create Account!</p>
 
                 <div className='flex flex-col items-center justify-start gap-6'>
                     <div className='flex flex-col gap-6 items-center justify-start'>
@@ -33,7 +41,9 @@ export default function Signup() {
                         <Link href="/login"><p className='text-sky-500 text-lg font-semibold'>Login</p></Link>
                     </div>
 
+
                 </div>
+
             </form>
         </div>
     );

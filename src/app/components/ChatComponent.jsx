@@ -1,10 +1,54 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useChat } from 'ai/react';
 import { FaUser } from "react-icons/fa";
 import { SiGooglegemini } from "react-icons/si";
+import { supabase } from '../../lib/supabaseClient';
 
-const ChatComponent = () => {
+
+const ChatComponent = ({ userId }) => {
     const { input, handleInputChange, handleSubmit, messages } = useChat();
+    const [chatHistory, setChatHistory] = useState([]);
+
+
+    useEffect(() => {
+
+        const fetchChatHistory = async () => {
+            const { data, error } = await supabase
+                .from('chat')
+                .select('*')
+                .order('created_at', { ascending: true });
+            if (error) {
+                console.error('Error fetching chat history:', error);
+            } else {
+                setChatHistory(data);
+            }
+        };
+        fetchChatHistory();
+    }, [chatHistory]);
+
+    useEffect(() => {
+        const handleSendMessage = async () => {
+            if (!userId) return;
+
+            const { data, error } = await supabase
+                .from('chat')
+                .insert([{ message: messages, user_id: userId }])
+                .select();
+
+            if (error) {
+                console.error('Error sending message:', error);
+            } else {
+                if (data && data.length > 0) {
+                    setChatHistory([...chatHistory, data[0]]);
+                    console.log(chatHistory);
+                } else {
+                    console.error('Unexpected response format:', data);
+                }
+            }
+        };
+        handleSendMessage();
+    }, [messages])
+
 
     return (
         <div className='flex flex-col h-full'>

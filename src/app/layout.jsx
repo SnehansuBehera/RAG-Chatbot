@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import "./globals.css";
+// import { ToastContainer } from 'react-toastify';
 
 export default function RootLayout({ children }) {
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      {/* <ToastContainer style={{ width: "50px" }} /> */}
       <body>
         {children}
       </body>
