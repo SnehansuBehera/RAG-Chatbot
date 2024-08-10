@@ -17,7 +17,7 @@ export default function Signup() {
             console.log(error.message);
         } else {
             setSuccess(true);
-            router.push('/login')
+            // router.push('/login')
         };
     };
 
@@ -26,7 +26,6 @@ export default function Signup() {
             <form onSubmit={handleSignup} className='flex flex-col items-center justify-start gap-10 bg-slate-100 rounded-xl shadow-lg shadow-zinc-200 py-16 px-16 '>
                 <div className='flex flex-col gap-2 items-center justify-start'>
                     <p className='text-3xl font-extrabold'>Create Account!</p>
-                    <p className='text-lg font-semibold text-green-500'>Check your mail after signup</p>
                 </div>
 
 
@@ -41,7 +40,9 @@ export default function Signup() {
                         <Link href="/login"><p className='text-sky-500 text-lg font-semibold'>Login</p></Link>
                     </div>
 
-
+                    {
+                        success && <p className='text-lg font-semibold text-green-500'>Confirm your Mail</p>
+                    }
                 </div>
 
             </form>

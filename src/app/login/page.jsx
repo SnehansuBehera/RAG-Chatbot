@@ -12,7 +12,7 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { error, isLoading } = await supabase.auth.signInWithPassword({ email, password });
         if (error) alert(error.message);
         else {
             // toast.success('Logged in!');
