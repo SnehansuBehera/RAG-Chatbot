@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useState } from 'react'
 import { useChat } from 'ai/react';
 import { FaUser } from "react-icons/fa";
@@ -9,22 +10,6 @@ const ChatComponent = ({ userId }) => {
     const { input, handleInputChange, handleSubmit, messages } = useChat();
     const [chatHistory, setChatHistory] = useState([]);
 
-
-    useEffect(() => {
-
-        const fetchChatHistory = async () => {
-            const { data, error } = await supabase
-                .from('chat')
-                .select('*')
-                .order('created_at', { ascending: true });
-            if (error) {
-                console.error('Error fetching chat history:', error);
-            } else {
-                setChatHistory(data);
-            }
-        };
-        fetchChatHistory();
-    }, [chatHistory]);
 
     useEffect(() => {
         const handleSendMessage = async () => {
@@ -46,6 +31,7 @@ const ChatComponent = ({ userId }) => {
                 }
             }
         };
+
         handleSendMessage();
     }, [messages])
 
